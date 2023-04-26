@@ -1,0 +1,8 @@
+1. Quick Sort w pamięci O(logn)
+2. Quick Sort bez rekurencji ze stosem
+3. Wstawianie do kopca
+4. k posortowanych linked list scalić w jedną O(nlogk)
+5. Struktura danych z insert, min, max
+6. Struktura danych z insert, extract median
+I jeszcze nie robiliśmy ale wspominał że będzie sortowanie tablicy k-chaotycznej w O(nlogk) czy jakoś tak 
+Czyli takiej że wszystkie elementy są na swoim miejscu z dokładnością do k
