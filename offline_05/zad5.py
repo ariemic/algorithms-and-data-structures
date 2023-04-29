@@ -1,6 +1,6 @@
 '''
 Ariel Michalik
-Złożoność: O(logE)
+Złożoność: O(ElogV)
 Algorytm tworzy z danej listy krawędzi graf w reprezentacji listy sąsiedztwa w taki sposób że wszystkie wierzchołki należące do tablicy S są reprezentowane przez jeden wierzchołek o numerze równym 
 min(S). Ten wierzchołek nazwijmy go s musi mieć połączenia z wszystkimi wierzchołkami, które nie są osobliwościami a miały krawędź wspólną z składowymi wierzchołka s. Tworzę graf G w taki sposób
 aby od wierzchołka s do reszty wierzchołków istniała tyłko jedna krawędź z najmniejszą wagą z tego powodu korzystam w funkcji build_graph z kolejki priorytetowej. Krawędzi pomiędzy wierzchołkami
