@@ -1,9 +1,17 @@
+'''
+Ariel Michalik
+Złożoność: O(logE)
+Algorytm tworzy z danej listy krawędzi graf w reprezentacji listy sąsiedztwa w taki sposób że wszystkie wierzchołki należące do tablicy S są reprezentowane przez jeden wierzchołek o numerze równym 
+min(S). Ten wierzchołek nazwijmy go s musi mieć połączenia z wszystkimi wierzchołkami, które nie są osobliwościami a miały krawędź wspólną z składowymi wierzchołka s. Tworzę graf G w taki sposób
+aby od wierzchołka s do reszty wierzchołków istniała tyłko jedna krawędź z najmniejszą wagą z tego powodu korzystam w funkcji build_graph z kolejki priorytetowej. Krawędzi pomiędzy wierzchołkami
+będącymi nie osobliwościami są tworzone normalnie. Na utworzonym grafie wykonuje algorytm Dijkstry, który zwraca wartość od źródła do wierzchołka końcowego lub None jeśli nie da się do niego dotrzeć.
+'''
+
 from zad5testy import runtests
 from queue import PriorityQueue
 
   
 def build_graph(E, singularities, s, n):
-    #ładniejsze ale wolniejsze
     G = [[]for _ in range(n)]
 
     q = PriorityQueue()
