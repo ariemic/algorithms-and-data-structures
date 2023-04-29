@@ -1,7 +1,7 @@
 from zad5testy import runtests
 from queue import PriorityQueue
-
-  
+            
+            
 def build_graph(E, singularities, s, n):
     #ładniejsze ale wolniejsze
     G = [[]for _ in range(n)]
@@ -29,7 +29,7 @@ def build_graph(E, singularities, s, n):
             visited[u] = True
         
     return G            
-  
+
 
 def relax(u, v, edge_weight, d, parent):
     if d[v] > d[u] + edge_weight:
@@ -38,7 +38,7 @@ def relax(u, v, edge_weight, d, parent):
         return True
     return False
 
-def dijkstra(G, s, t):
+def dijkstra(G, s):
     n = len(G)
     d = [float('inf')]*n
     parent = [None]*n
@@ -52,8 +52,7 @@ def dijkstra(G, s, t):
             if not visited[v] and relax(u, v, edge_weight, d, parent):
                 q.put((d[v], v))
         visited[u] = True #zapewnia nas nie będziemy cofać się do tyłu w grafie
-        if u == t:
-            return d[t]
+    return d
 
 def spacetravel( n, E, S, a, b ):
     singularities = [False]*n
@@ -66,9 +65,9 @@ def spacetravel( n, E, S, a, b ):
     if singularities[b]: b = s
 
     G = build_graph(E, singularities, s, n)
-    res = dijkstra(G, a, b)
-    return res if res != float('inf') else None
-
+    # print(G)
+    d = dijkstra(G, a)
+    return d[b] if d[b] != float('inf') else None
 
 
 # zmien all_tests na True zeby uruchomic wszystkie testy
