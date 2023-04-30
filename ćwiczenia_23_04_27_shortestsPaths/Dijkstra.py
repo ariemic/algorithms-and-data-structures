@@ -9,18 +9,15 @@ def max_vertex(E):
     return max(E[i][1] for i in range(n))+1
 
 
-def build_graph(E):
-    #tworzy graf nieskierowany
-    #przeksztalcam graf w liste sasiedztwa z krotka reprezentujaca wage
+def build_graph(E, n):
     n = len(E)
-    G = [[]for _ in range(max_vertex(E))] #create graph with proper size
-    for tup in E:
-        u, v = tup[0], tup[1]
-        val = tup[2]
+    G = [[]for _ in range(n)] #create graph with proper size
+    for edge in E:
+        u, v, val = edge[0], edge[1], edge[2]
         G[u].append((v, val))
         G[v].append((u, val))
     return G
-  
+
 def relax(u, v, weight, d, parent):
     if d[v] > d[u] + weight:
         #distance to v vertex is longer then from d[u]+wieght what that exists shorter path from 

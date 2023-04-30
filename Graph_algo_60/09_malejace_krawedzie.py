@@ -25,7 +25,7 @@ def DFS(G, value, source, destination):
                 return True
 
     return False 
-print( DFS(G_test, float('inf'), 0, 4) )
+print( DFS(G1, float('inf'), 0, 4) )
 
 
 def DFS_decreasing_edges(G, x, y):

@@ -34,7 +34,7 @@ def dijkstra(Edges, n, s, t):
                 if d[v] > d[u] + w_v:
                     d[v] = d[u] + w_v
                     parent[v] = u
-                    q.put((w_v, v))
+                    q.put((d[v], v))
                     
         visited[u] = True
         charge = d[t]
