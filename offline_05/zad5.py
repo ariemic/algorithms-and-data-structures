@@ -9,34 +9,53 @@ będącymi nie osobliwościami są tworzone normalnie. Na utworzonym grafie wyko
 
 from zad5testy import runtests
 from queue import PriorityQueue
-
-  
 def build_graph(E, singularities, s, n):
+    #robi graf z niepotrzebnymi krawędziami
+    
     G = [[]for _ in range(n)]
-
-    q = PriorityQueue()
     
     for i in range(len(E)):
         u, v, val = E[i]
         if singularities[u] and not singularities[v]:
-            q.put((val, v)) 
+            G[v].append((s, val))
+            G[s].append((v, val))
             
         if not singularities[u] and singularities[v]:
-            q.put((val, u))
+            G[u].append((s, val))
+            G[s].append((u, val))
             
         if not singularities[u] and not singularities[v]:
             G[u].append((v, val))
             G[v].append((u, val))
+                    
+    return G
+  
+# def build_graph(E, singularities, s, n):
+#     G = [[]for _ in range(n)]
+
+#     q = PriorityQueue()
+    
+#     for i in range(len(E)):
+#         u, v, val = E[i]
+#         if singularities[u] and not singularities[v]:
+#             q.put((val, v)) 
+            
+#         if not singularities[u] and singularities[v]:
+#             q.put((val, u))
+            
+#         if not singularities[u] and not singularities[v]:
+#             G[u].append((v, val))
+#             G[v].append((u, val))
         
-    visited = [False]*n        
-    while not q.empty():
-        val, u = q.get()
-        if not visited[u]:
-            G[u].append((s, val))
-            G[s].append((u, val))
-            visited[u] = True
+#     visited = [False]*n        
+#     while not q.empty():
+#         val, u = q.get()
+#         if not visited[u]:
+#             G[u].append((s, val))
+#             G[s].append((u, val))
+#             visited[u] = True
         
-    return G            
+#     return G            
   
 
 def relax(u, v, edge_weight, d, parent):

@@ -1,9 +1,12 @@
 '''
 Zadanie 2. (uniwersalne ujscie) Mówimy, ze wierzchołek t w grafie skierowanym jest uniwersalnym
-ujsciem, jesli (a) z kazdego innego wierzchołka v istnieje krawedz z v do t, oraz (b) nie istnieje zadna krawedz
-wychodzaca z t.
+ujsciem, jesli 
+(a) z kazdego innego wierzchołka v istnieje krawedz z v do t, oraz 
+(b) nie istnieje zadna krawedz wychodzaca z t.
+
 1. Podac algorytm znajdujacy uniwersalne ujscie (jesli istnieje) przy reprezentacji macierzowej (O(n2)).
 2. Pokazac, ze ten problem mozna rozwiazac w czasie O(n) w reprezentacji macierzowej.
+
 
 Jedziemy przez macierz, mamy wspolrzedne i, j, zaczynamy od lewego gornego rogu. Idziemy w prawo dopoki
 sa zera. Jesli doszlismy do 1, to wtedy idziemy w dol i sprwadzamy, czy mozemy znowu isc w prawo ( patrzymy 
@@ -16,29 +19,36 @@ Jest tak, bo jesi idizemy w dol to jest tylko jedna dziura, ktora przepusci nas 
 jesli takiej nie znajdziemy, to nie ma takiego ujscia. 
 
 '''
-G1 = [[0, 1, 1, 0], 
-      [1, 0, 1, 0], 
-      [0, 0, 0, 0], 
-      [0, 1, 1, 0]]
+G = [[0, 0, 1, 1], #source - 3
+     [1, 0, 0, 1], 
+     [0, 0, 0, 1], 
+     [0, 0, 0, 0]]
 
-def ujscie(G):
+
+def find_source(G):
+    #O(n^2)
     n = len(G)
-    i, j = 0, 0
-    while i < n:
-        while j < n:
-            if G[i][j] == 0:
-               j += 1
-            else:
-                i += 1
-        break
-        #doszedlem do sciany
-    if G[i] == [0]*n: #wiersz ma same zera
-        #sprawdz czy suma i-tej kolumny wynosi n-1
-        cnt = 0
-        for j in range(n):
-            cnt += G[j][i]
-        if cnt == n-1:
-            return i
+    arr = [0]*n
+    for i in range(n):
+        if G[i] == arr: #dany wiersz ma same zera
+            cnt = 0
+            for j in range(n):
+                if i != j and G[j][i] == 1:
+                    cnt += 1
+            if cnt == n-1: return i
     return None
 
-print(ujscie(G1))
+def find_source_linear(G):
+    #O(n) 
+    n = len(G)
+    i, j = 0, 1
+    while j != n and i != n:
+        if G[i][j] == 0:
+            j += 1
+        else:
+            i += 1
+    return i if G[i] == [0]*n else None
+
+print(find_source(G))
+            
+

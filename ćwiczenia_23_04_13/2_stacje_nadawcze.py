@@ -29,7 +29,7 @@ def stacje(G, s):
                 przetworzone.append(v)
                 q.append(v)
     # przetworzone[::-1]
-    print(przetworzone)
+    print(przetworzone[::-1])
     #w mojej tablicy przetworzone bede usuwac z grafu wierzcholki od samego tylu listy, bo sa tam ostatnio dołączone wierzcholki z najwyzszym numerem fali
     while przetworzone:
         x = przetworzone.pop()
