@@ -5,10 +5,52 @@ x i y sprawdza, czy istnieje sciezka z x do y, w której przechodzimy po krawedz
 
 Nie powienienem tu oznaczać visited bo kilka razy mogę wejść do tego samego wierzchołka, nie zależy mi na najkrótszej ścieżce tylko nad taką która spełnia warunki zadania jeśli istnieje.
 '''
+
 from collections import deque
 
 G = [[(1,2), (2,4)], [(0,2), (3, 5), (2, 6)], [(0, 4), (3, 3), (1, 6)], [(2,3), (1,5), (4, 1)], [(3, 1)]]
 G1 = [[(1,2), (2,4), (4, 7)], [(0,2), (3, 5), (2, 6)], [(0, 4), (3, 3), (1, 6)], [(2,3), (1,5), (4, 1)], [(3, 1), (0, 7)]]
+
+G_test = [[(1, 2), (2, 1)], [(0, 2), (2, 5)], [(0, 1), (1, 5)]]
+
+
+def DFS(G, value, source, destination):
+    for (neighbour, weight) in G[source]:
+        
+        if neighbour == destination and value > weight:
+            return True 
+
+        elif value > weight:
+            if DFS(G, weight, neighbour, destination):
+                return True
+
+    return False 
+print( DFS(G_test, float('inf'), 0, 4) )
+
+
+def DFS_decreasing_edges(G, x, y):
+    n = len(G)
+    parent = [None]*n
+    path = []
+    def dfs_visit(G, x, y):
+        u, u_w = x[0], x[1]    
+        if u == y:
+            return True
+        
+        for v, v_w in G[u]:
+            if v_w < u_w: 
+                if dfs_visit(G, (v, v_w), y): 
+                    parent[v] = u
+                    return True
+        return False
+              
+    if dfs_visit(G, (x, float('inf')), y):
+        path = [y]
+        while y != x:
+            y = parent[y]
+            path.append(y)
+    return path[::-1] if len(path) > 0 else None 
+    
 
 
 def BFS_decreasing_edges(G, x, y):
@@ -26,37 +68,11 @@ def BFS_decreasing_edges(G, x, y):
                 visited[v] = True
                 parent[v] = u
         if u == y:
-            path = []
-            while u != x: 
-                if parent[u] != None:
-                    path.append(u)
-                    u = parent[u]
-                else:
-                    return None
-            path.append(x)
-            #edge case jedna krawedz prowadząca z x do y nie spełania warunków zadania - algorytm się na tym wywala
-            return path[::-1]
-                
-print(BFS_decreasing_edges(G, 0, 4))
+            return True
+    return False
+        
+print(BFS_decreasing_edges(G_test, 0, 4))
 
 
-def DFS_decreasing_edges(G, x, y):
-    n = len(G)
-    visited = [False]*n
-    path = []
-    
-    def dfs_visit(G, u):    
-        visited[u] = True
-        for v in G[u]:
-            if not visited[v]:
-              
-                dfs_visit(G, v)
-
-    for u in range(n):
-        if not visited[u]:
-            dfs_visit(G, u)
-            
-            
-
-            
+print(DFS_decreasing_edges(G_test, 0, 4))
     
