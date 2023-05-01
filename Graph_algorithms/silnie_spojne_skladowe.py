@@ -2,7 +2,6 @@
 Napisz algorytm wyodrębniający silnie spójne składowe z grafu. 
 Zwróć tablice [[wierzcholki pierwszej spojnej skladowe], [2-iej], [i-tej]]
 
-
 #mógłbym zapisywać czasy z wierzchołkiem i po nich po sortować counting sortem, 
 #ale falisz mówił że tak się nie robi
 
@@ -40,7 +39,7 @@ def StronglyConnectedComponents(G):
     for u in range(n):
         for v in G[u]:
             newG[v].append(u)
-    #         G[u].remove(v) #dlaczego przy jednoczesnym usuwaniu krawędzi nie działa
+    
             
     #drugie przejscie dfs'a
     visited = [False]*n
