@@ -10,16 +10,29 @@ Robie implementacje dijkstry dla macierzy sąsiedztwa
 
 from queue import PriorityQueue
 
-def relax(u, v, edge_weight, d, parent):
-    if d[v] > d[u] + edge_weight:
+
+def relax(u, v, edge_weight, parent, d):
+    if d[v] > d[u]+edge_weight:
         d[v] = d[u] + edge_weight
         parent[v] = u
         return True
     return False
 
+def kingsPath(G, s, t):
+    n = len(G)
+    q = PriorityQueue()
+    d = [float('inf')]*n
+    visited = [False]*n
+    parent = [None]*n
+    d[s[0]] = 0
+    q.put((0, s[0]))
+    
+    while not q.empty():
+        du, u = q.get()
+        for v in range(n):
+            if not visited[v] and G[u][v] != -1 and relax(u, v, G[u][v], parent, d):
+                q.put((d[v], v))
+        visited[u] = True 
+        if t == (u,v):
+            return d[u]
 
-        
-   
-
-def kings_path(A):
-    pass

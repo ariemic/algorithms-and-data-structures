@@ -15,8 +15,8 @@ def Dijkstra(G, s, t):
     d = [float('inf')]*n
     visited = [False]*n
     parent = [None]*n
-    d[s[0]] = 0
-    q.put((0, s[0]))
+    d[s] = 0
+    q.put((0, s))
     
     while not q.empty():
         du, u = q.get()
@@ -24,7 +24,7 @@ def Dijkstra(G, s, t):
             if not visited[v] and G[u][v] != -1 and relax(u, v, G[u][v], parent, d):
                 q.put((d[v], v))
         visited[u] = True #zapobiega cofaniu się w tył (takie cofanie wydłuża ścieżke) ten wierzchołek jest już przetworzony
-        if t == (u,v):
+        if t == u:
             return d[u]
         
 G = [[-1, 7, 5, 2, -1, -1],
@@ -34,4 +34,4 @@ G = [[-1, 7, 5, 2, -1, -1],
      [-1, 3, 4, -1, -1, 6],
      [-1, 8, -1, 2, 6, -1]]
 
-print(Dijkstra(G, (0, 0), (5, 5)))
+print(Dijkstra(G, 0, 5))
