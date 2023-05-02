@@ -1,4 +1,3 @@
-
 def Bridges(G):
     #algorytm zwraca liczbe mostów w grafie oraz wierzchołki je tworzące w postaci listy krotek
     n = len(G)
@@ -19,10 +18,10 @@ def Bridges(G):
         for v in G[u]:
             if not visited[v]:
                 parent[v] = u
-                dfs_visit(G, v)
+                dfs_visit(G, v) #najpierw wchodzę rekurencją później przypisuje low, nie moge na odwrót
                 low[u] = min(low[u], low[v]) #bierzemy paremetry low ponieważ visit_time nie ulega zmienie, interesuje nas tylko przy patrzeniu na krawedz wsteczna!
                 
-            elif v != parent[u]:
+            elif v != parent[u]:#co znaczy ten warunek - nie za bardzo rozumiem
                 low[u] = min(low[u], visit_time[v]) #patrze na krawedz wsteczną jeśli nie mogę wejść głębiej bo już wszystkie sąsiednie wierzchołki są odwiedzone
         
     
