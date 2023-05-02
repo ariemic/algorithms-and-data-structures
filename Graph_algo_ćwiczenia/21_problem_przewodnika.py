@@ -18,7 +18,7 @@ def max_vertex(Edges):
 def create_grapth(Edges):
     #w tym sposobie powstają parallel edges
     n = max_vertex(Edges)
-    G = [[]*n]
+    G = [[]for _ in range(n)]
     for edge in Edges:
         u, v, val = edge[0], edge[1], (-1)*edge[2] #robie ujemne wagi na krawedziach ->kopiec min w max
         G[u].append((v, val))
@@ -26,17 +26,20 @@ def create_grapth(Edges):
     return G
         
 
-def relax(u, v, edge_weight, d, parent):
+def relax(u, v, edge_weight, d, parent, edges_weights):
     if d[v] > d[u] + edge_weight:
         d[v] = d[u] + edge_weight
-        parent[v] = (u, edge_weight)
+        parent[v] = u
+        edges_weights[v] = edge_weight
         return True
     return False
 
 def dijkstra(G, s, t):
     n = len(G)
     d = [float('inf')]*n
-    parent = [None]*n #trzuma krotki (do, waga_krawedzi)
+    parent = [None]*n 
+    edges_weights = [0]*n
+    
     visited = [False]*n
     q = PriorityQueue()
     d[s] = 0
@@ -44,12 +47,12 @@ def dijkstra(G, s, t):
     while not q.empty():
         d_u, u = q.get()
         for v, edge_weight in G[u]:
-            if not visited[v] and relax(u, v, edge_weight, d, parent):
+            if not visited[v] and relax(u, v, edge_weight, d, parent, edges_weights):
                 #przy krawedziach wielokrotnych parent zapisze parenta dla najwiekszej wagi krawedzi
                 q.put((d[v], v))
         visited[u] = True 
         if u == t:            
-            return  parent
+            return parent, edges_weights
     return None
 
 def guide_problem(Edges, A, B, K):
@@ -58,13 +61,16 @@ def guide_problem(Edges, A, B, K):
     G = create_grapth(Edges)
     group_cnt, paths = 0, []
     while K != 0:  
-        parent= dijkstra(G, A, B)
+        parent, edges_weights = dijkstra(G, A, B)
         if parent != None:
-            n = len(parent)
-            vertices = [parent[i][0] for i in range(n)] #create path form it because parent array keeps tuples (vertex, edge_weight)
-            group_size = min(parent[i][1] for i in range(n))*(-1)
-            K -= group_size    
-            edge_delete(G, vertices, A, B)
+            n = len(edges_weights)
+            group_size = min(edges_weights[i] for i in range(n))*(-1)
+            K -= group_size       
+            group_cnt += 1 
+            paths.append(create_path(G, parent, B))    
+            delete_edges(G, parent, edges_weights, B)
+            
+    return paths, group_cnt
 
 
 #Jeśli autobus jedzie od stacji 0 do 2 to tworze krawedz tylko miedzy tymi wierzchołkami bo autobus jedzie między dwoma miastami!
@@ -74,17 +80,23 @@ def guide_problem(Edges, A, B, K):
 #czy dijkstra działa dla wielokrotnych krawedzi? W podstawowej implementacji nie działa, wynik zależałby od kolejności krawędzi w grafie
 #https://stackoverflow.com/questions/37504390/dijkstra-with-parallel-edges-and-self-loop
 
+def create_path(G, parent, t):
+    path = [t]
+    while t != None:
+        t = parent[t]
+        path.append(t)
+    return path[::-1][1:]
+
+def delete_edges(G, parent, edges_weights, t):
+    while parent[t] != None:
+        u, v, val = t, parent[t], edges_weights[t]
+        G[u].remove((v, val))
+        G[v].remove((u, val))
+        t = parent[t]
 
 
-def edge_delete(G,parent,start,end):
-    x = parent[end]
-    while x != start:
-        i = x[0]
-        x = parent[x]
-        j = x[0]
-        weight = j[1]
-        Edges.remove(weight(i,j,weight))
 
 
+Edges = [(0, 1, 20),(0, 1, 30), (1, 4, 25), (0, 4, 10), (0, 2, 30), (2, 3, 21), (3, 4, 22)]
 
-Edges = [(0, 1, 20),(0, 1, 30), (1, 4, 25), (0, 4, 10), (0, 2, 30), (2, 3, 21)]
+print(guide_problem(Edges, 0, 4, 80))
