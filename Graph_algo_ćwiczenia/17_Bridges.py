@@ -20,10 +20,10 @@ def Bridges(G):
             if not visited[v]:
                 parent[v] = u
                 dfs_visit(G, v)
-                low[u] = min(low[u], low[v])
+                low[u] = min(low[u], low[v]) #bierzemy paremetry low ponieważ visit_time nie ulega zmienie, interesuje nas tylko przy patrzeniu na krawedz wsteczna!
                 
             elif v != parent[u]:
-                low[u] = min(low[u], visit_time[v])
+                low[u] = min(low[u], visit_time[v]) #patrze na krawedz wsteczną jeśli nie mogę wejść głębiej bo już wszystkie sąsiednie wierzchołki są odwiedzone
         
     
     for u in range(n):
@@ -33,27 +33,11 @@ def Bridges(G):
     for u in range(n):
         if visit_time[u] == low[u] and parent[u] != None:
             bridges.append((parent[u], u))
-    print(bridges)
     return bridges
 
 
 
 
-# def Edge(G, u, v):
-#     G[u].append(v)
-#     G[v].append(u)
-# #
-
-# V = 6
-# G = [ [] for _ in range(V) ]
-# Edge(G, 0, 2)
-# Edge(G, 1, 2)
-# Edge(G, 2, 3)
-# Edge(G, 2, 4)
-# Edge(G, 3, 4)
-# Edge(G, 3, 5)
-
-# bridges = Bridges(G)
-# print(bridges)
-graph = [[1, 4], [0, 2], [1, 3, 4], [2, 5, 6], [0, 2], [3, 6], [3, 5, 7], [6]]
-Bridges(graph)
+G = [[1, 4], [0, 2], [1, 3, 4], [2, 5, 6], [0, 2], [3, 6], [3, 5, 7], [6]]
+bridges = Bridges(G)
+print(bridges)
