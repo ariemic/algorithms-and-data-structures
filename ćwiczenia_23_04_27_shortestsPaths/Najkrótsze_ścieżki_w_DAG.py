@@ -33,9 +33,11 @@ def shortestsPathsDAG(G, s):
     parent = [None for _ in range(n)]
     for i in range(topo_sorted.index(s)+1, n): #wystarczy jedna pętla bo nie ma krawedzi która nas cofa i poprawi nam ścieżke bo nie ma cyklu mamy graf acykliczny
         for p, weight in G[i]:
+            #relax
             if d[p] > d[i] + weight:
                 d[p] = d[i]+weight
                 parent[p] = i  
+            #end relax
     return d, parent
 
 

@@ -21,7 +21,7 @@ def Bridges(G):
                 dfs_visit(G, v) #najpierw wchodzę rekurencją później przypisuje low, nie moge na odwrót
                 low[u] = min(low[u], low[v]) #bierzemy paremetry low ponieważ visit_time nie ulega zmienie, interesuje nas tylko przy patrzeniu na krawedz wsteczna!
                 
-            elif v != parent[u]:#co znaczy ten warunek - nie za bardzo rozumiem
+            elif v != parent[u]:#jeśli istnieje krawedz wsteczna to nie może ona być rodzicem u
                 low[u] = min(low[u], visit_time[v]) #patrze na krawedz wsteczną jeśli nie mogę wejść głębiej bo już wszystkie sąsiednie wierzchołki są odwiedzone
         
     

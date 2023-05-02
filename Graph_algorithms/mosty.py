@@ -19,26 +19,47 @@ UWAGA! Jeśli podzielimy most na fragmenty to algorytm wykryje każdy z nich, gd
 '''
 #Algorytm ma zwracać liczbę mostów w grafie oraz liste krotek z zapisanymi mostami 
 
-def DFS_mosty(G):
+def Bridges(G):
+    #algorytm zwraca liczbe mostów w grafie oraz wierzchołki je tworzące w postaci listy krotek
     n = len(G)
     visited = [False]*n
-    d = [0]*n #zapisuje czas odwiedzenia danego wierzchołka pierwszy raz
+    parent = [None]*n
+    visit_time = [0]*n
+    low = [float('inf')]*n
+    bridges = []
     time = 0
-    def dfsVisit(G, u):
+
+    def dfs_visit(G, u):
         nonlocal time
+        
         time += 1
-        d[u]=time
         visited[u] = True
+        visit_time[u], low[u] = time, time #1 krok
+        
         for v in G[u]:
             if not visited[v]:
-                visited[v] = True
-                dfsVisit(G, v)
-        #nie potrzebuje czasu przetworzenia wierzchoła
-    #end def
-    low = [0]*n
+                parent[v] = u
+                dfs_visit(G, v) #najpierw wchodzę rekurencją później przypisuje low, nie moge na odwrót
+                low[u] = min(low[u], low[v]) #bierzemy paremetry low ponieważ visit_time nie ulega zmienie, interesuje nas tylko przy patrzeniu na krawedz wsteczna!
+                
+            elif v != parent[u]:#co znaczy ten warunek - nie za bardzo rozumiem
+                low[u] = min(low[u], visit_time[v]) #patrze na krawedz wsteczną jeśli nie mogę wejść głębiej bo już wszystkie sąsiednie wierzchołki są odwiedzone
+        
+    
     for u in range(n):
         if not visited[u]:
-            dfsVisit(u)
-    
+            dfs_visit(G, u)
+            
+    for u in range(n):
+        if visit_time[u] == low[u] and parent[u] != None:
+            bridges.append((parent[u], u))
+    return bridges
+
+
+
+
+G = [[1, 4], [0, 2], [1, 3, 4], [2, 5, 6], [0, 2], [3, 6], [3, 5, 7], [6]]
+bridges = Bridges(G)
+print(bridges)
     
         

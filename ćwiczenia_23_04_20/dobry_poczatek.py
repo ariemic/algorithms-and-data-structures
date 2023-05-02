@@ -1,6 +1,6 @@
 '''
 Dobry początek
-Znajdz wyszystkie silnie spojne skladowe, zamien je na jeden wierzcholek
+Znajdz wyszystkie silnie spojne skladowe, zamien je na jeden wierzcholek 
 Silna spojna skladowa to taki podzbior wierzcholkow ze istnieje sciezka pomiedzy kazda para wierzcholkow w tej silnie spojnej skladowej
 Wszystkie wiercholki w cyklu sa dobrymi poczatkami
 
@@ -13,7 +13,6 @@ Urachamiam dfs na calym grafie, zapisuje kolejnosc przetwarzania w tablicy, ten 
 jedynie dobrym poczatkiem, z znalezionego wierzcholka urachamiam dfs/ bfs i patrze czy dojde z niego do wszystkich pozostalych wierzcholkow
 '''
 def dfsVisit(G, v, time, time_completed, visited):
-    #time - ile juz wierzcholkow prztworzylismy
     visited[v] = True
     for v in G[v]:
         if not visited[v]:
@@ -37,7 +36,10 @@ def good_beginning(G):
     time_visited = [-1]*n
     time = dfsVisit(G, max_v, time, time_visited, visited)
     
-    #finish it
+    if max_v == time: #jeśli po jednokrotnym wykonanie bfs najwyzszy czas - time - jest równy max_v najwyzszy czas po odwiedzeniu kazdego wierzcholka
+        return True
+    return False 
+   
     
     
     

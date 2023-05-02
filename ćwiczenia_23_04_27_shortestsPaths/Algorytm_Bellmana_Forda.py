@@ -55,7 +55,7 @@ def BellmanFord(Edges, s, t):
     for edge in Edges:
         u, v, val = edge[0], edge[1], edge[2]
         if d[v] > d[u] + val:
-            is_negative_cycle = True #pojawił sie cykl o ujemnej wadze - bellman ford nie radzi sobie?
+            is_negative_cycle = True #pojawił sie cykl o ujemnej wadze - bellman ford nie radzi sobie - bo takie cykle dają -inf
     
     if is_negative_cycle:
         return None
