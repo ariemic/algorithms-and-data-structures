@@ -38,7 +38,7 @@ def dijkstra(G, s, t):
     n = len(G)
     d = [float('inf')]*n
     parent = [None]*n 
-    edges_weights = [0]*n
+    edges_weights = [float('-inf')]*n
     
     visited = [False]*n
     q = PriorityQueue()
@@ -53,7 +53,7 @@ def dijkstra(G, s, t):
         visited[u] = True 
         if u == t:            
             return parent, edges_weights
-    return None
+    return None, None
 
 def guide_problem(Edges, A, B, K):
     #dijkstra z kopcem maximum; przy tym zapisuje najmniejsza wage na tej scieżce bo tyle osob z grupy moge wpakować tą trasą
@@ -64,11 +64,12 @@ def guide_problem(Edges, A, B, K):
         parent, edges_weights = dijkstra(G, A, B)
         if parent != None:
             n = len(edges_weights)
-            group_size = min(edges_weights[i] for i in range(n))*(-1)
+            group_size = max(edges_weights[i] for i in range(n))*(-1)
             K -= group_size       
             group_cnt += 1 
             paths.append(create_path(G, parent, B))    
             delete_edges(G, parent, edges_weights, B)
+        return False
             
     return paths, group_cnt
 
@@ -97,6 +98,21 @@ def delete_edges(G, parent, edges_weights, t):
 
 
 
-Edges = [(0, 1, 20),(0, 1, 30), (1, 4, 25), (0, 4, 10), (0, 2, 30), (2, 3, 21), (3, 4, 22)]
+edges = [(0, 1, 20),(0, 1, 30), (1, 4, 25), (0, 4, 10), (0, 2, 30), (2, 3, 21), (3, 4, 22)]
 
-print(guide_problem(Edges, 0, 4, 80))
+print(guide_problem(edges, 0, 4, 80))
+# edges = [
+#     (0, 1, 50),
+#     (0, 3, 25),
+#     (1, 2, 75),
+#     (2, 3, 20),
+#     (3, 5, 50),
+#     (5, 6, 2),
+#     (4, 6, 10),
+#     (6, 7, 20),
+#     (7, 8, 70),
+#     (1, 5, 75),
+#     (2, 5, 30),
+#     (3, 4, 50)
+# ]
+# print(guide_problem(edges, 0, 8, 100))
