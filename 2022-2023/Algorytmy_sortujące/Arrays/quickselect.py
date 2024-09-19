@@ -31,3 +31,4 @@ def quickSelect(T, p, left, right):
         if pivot == p: return pivot 
         elif pivot < p: return quickSelect(T, p, pivot + 1, right)
         else: return quickSelect(T, p, left, pivot - 1)
+
