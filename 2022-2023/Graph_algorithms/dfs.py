@@ -5,7 +5,7 @@ def dfs(G):
     parent = [None]*n             
     
     def dfs_visit(G, u):
-        nonlocal time #saying when the search finishes examining v's adjacency list (and blackens v)
+        nonlocal time #saying when the search finishs examining v's adjacency list (and makes v black)
         time += 1
         visited[u] = True
         for v in G[u]:
