@@ -15,17 +15,17 @@ def Prims(G):
     weights[0] = 0
 
     while not queue.empty():
-        value, vertex = queue.get()
+        value, u = queue.get()
 
-        if not processed[vertex]:
-            processed[vertex] = True 
+        if not processed[u]:
+            processed[u] = True 
             
-            for ( neighbour, weight ) in G[vertex]:
+            for ( v, weight ) in G[u]:
 
-                if not processed[neighbour] and weight < weights[neighbour]:
-                    weights[neighbour] = weight
-                    parents[neighbour] = vertex 
-                    queue.put( (weight, neighbour) )
+                if not processed[v] and weight < weights[v]:
+                    weights[v] = weight
+                    parents[v] = u 
+                    queue.put( (weight, v) )
             #end for 
         #end if 
     #end while 
@@ -70,29 +70,29 @@ G = undirected_weighted_graph_list([(0, 1, 1), (1, 2, 5), (2, 3, 3000), (0, 5, 1
                                     (5, 2, 6), (5, 4, 8), (4, 2, 4), (4, 3, 9)])
 
 print( Prims(G) )
-print( createMST(G) )
+# print( createMST(G) )
 
 print(" ----------------- " )
 
-G = undirected_weighted_graph_list([(0, 1, 9), (1, 4, 3), (4, 6, 6), (6, 5, 1), (5, 2, 6), (2, 0, 0),
-                                    (0, 5, 7), (0, 3, 5), (3, 5, 2), (3, 1, -2), (3, 6, 3)])
+# G = undirected_weighted_graph_list([(0, 1, 9), (1, 4, 3), (4, 6, 6), (6, 5, 1), (5, 2, 6), (2, 0, 0),
+#                                     (0, 5, 7), (0, 3, 5), (3, 5, 2), (3, 1, -2), (3, 6, 3)])
 
-print( Prims(G))
-print( createMST(G) )
+# print( Prims(G))
+# print( createMST(G) )
 
-print(" ----------------- " )
+# print(" ----------------- " )
 
-G = undirected_weighted_graph_list([(0, 1, 2), (1, 3, 0), (0, 3, 2), (0, 4, 3), (0, 2, 5), (2, 3, 1),
-                                    (2, 4, 6), (4, 3, 4), (3, 5, 8)])
+# G = undirected_weighted_graph_list([(0, 1, 2), (1, 3, 0), (0, 3, 2), (0, 4, 3), (0, 2, 5), (2, 3, 1),
+#                                     (2, 4, 6), (4, 3, 4), (3, 5, 8)])
 
-print( Prims(G))
-print( createMST(G) )
+# print( Prims(G))
+# print( createMST(G) )
 
-print(" ----------------- " )
+# print(" ----------------- " )
 
-G = undirected_weighted_graph_list([(0, 1, 6), (1, 2, 4), (3, 4, 1), (4, 5, 7), (6, 7, 11), (7, 8, 5),
-                                    (0, 3, 3), (3, 6, 8), (1, 4, 2), (4, 7, 9), (2, 5, 12), (5, 8, 10)])
+# G = undirected_weighted_graph_list([(0, 1, 6), (1, 2, 4), (3, 4, 1), (4, 5, 7), (6, 7, 11), (7, 8, 5),
+#                                     (0, 3, 3), (3, 6, 8), (1, 4, 2), (4, 7, 9), (2, 5, 12), (5, 8, 10)])
 
-print( Prims(G))
-print( createMST(G) )
+# print( Prims(G))
+# print( createMST(G) )
 
