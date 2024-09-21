@@ -13,6 +13,8 @@ def longest_not_coherent_subseq(A):
       if A[t] < A[k] and F[t] < F[k] + 1:
         F[k] = F[t] + 1
         Parent[k] = t
+    # print_sol(A, Parent, k)
+    # print("-----------------------------")
   return F[-1]
 
 
@@ -29,10 +31,14 @@ def lis(A):
   return F[-1]
     
 
-A = [2, 1, 4, 3, 4, 8, 5, 7]
-A2 = [10, 22, 9, 33, 21, 50, 41, 60, 80]
+def print_sol(A, P, k):
+  if P[k] != -1:
+    print_sol(A, P, P[k])
+  print(A[k])
 
-# print(longest_not_coherent_subseq(A))
+
+A = [2, 1, 4, 3, 4, 8, 5, 7]
+# A2 = [10, 22, 9, 33, 21, 50, 41, 60, 80]
+
+print(longest_not_coherent_subseq(A))
 # print(lis(A))
-print(longest_not_coherent_subseq(A2))
-print(lis(A2))
