@@ -1,6 +1,7 @@
 package arraysAndHashing;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 class AnagramGroups {
 
@@ -22,7 +23,7 @@ class AnagramGroups {
         }
 
         return stringMap.values().stream()
-                .toList();
+                .collect(Collectors.toList());
 
 
     };
